@@ -9,7 +9,7 @@ import (
 	"restaurant-api/routes"
 )
 
-var foodCollection  *.mongo.Collection = database.OpenCollection(database.Client, "food")
+var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 
 func main() {
 
@@ -31,6 +31,9 @@ func main() {
 	routes.OrderItemRoutes(router)
 	routes.InvoiceRoutes(router)
 
-	router.Run(":" + port)
+	err := router.Run(":" + port)
+	if err != nil {
+		return
+	}
 
 }
