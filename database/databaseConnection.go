@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func DBinstance() *mongo.Client {
+func DbInstance() *mongo.Client {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
@@ -26,4 +26,11 @@ func DBinstance() *mongo.Client {
 	fmt.Println("Connected to MongoDB!")
 	return client
 
+}
+
+var Client *mongo.Client = DbInstance()
+
+func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	var collection *mongo.Collection = client.Database(os.Getenv("DB_NAME")).Collection(collectionName)
+	return collection
 }
